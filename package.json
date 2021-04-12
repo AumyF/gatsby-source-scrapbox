@@ -2,11 +2,32 @@
   "name": "gatsby-source-scrapbox",
   "version": "0.1.0",
   "description": "A Gatsby source plugin for sourcing data from Scrapbox",
-  "keywords": [],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin",
+    "scrapbox"
+  ],
+  "bugs": {
+    "url": "https://github.com/aumyf/gatsby-source-scrapbox/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aumyf/gatsby-source-scrapbox.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "Aumy",
+  "files": [
+    "lib",
+    "gatsby-node.js",
+    "gatsby-node.d.ts",
+    "index.js"
+  ],
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "tsc",
+    "format": "prettier --write src",
+    "lint": "prettier --check src && eslint src",
     "test": "jest"
   },
   "dependencies": {

@@ -1,6 +1,4 @@
 node_modules
-.cache
-public
 *.js
 !index.js
 *.d.ts

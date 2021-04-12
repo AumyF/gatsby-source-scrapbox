@@ -8,12 +8,11 @@
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:typescript-sort-keys/recommended"
   ],
-  "ignorePatterns": ["*.js", "/public", "/types"],
+  "ignorePatterns": ["*.js", "*.d.ts"],
   "rules": {
     "@typescript-eslint/ban-types": "off",
     "simple-import-sort/imports": "warn",

@@ -1,4 +1,5 @@
 import { filter } from "fp-ts/lib/Array";
+import { left } from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import {
   nullType,
@@ -53,22 +54,11 @@ const PagesResponse = readonly(
   "PagesResponse"
 );
 
-const PagesOptions = readonly(
-  type(
-    {
-      skip: number,
-      limit: number,
-    },
-    "mutablePagesOptions"
-  ),
-  "PagesOptions"
-);
-
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Scrapbox {
   export type PagesResponse = TypeOf<typeof PagesResponse>;
 
-  export type PagesOptions = TypeOf<typeof PagesOptions>;
+  export type PagesOptions = Readonly<{ limit: number; skip: number }>;
 
   export type Page = TypeOf<typeof Page>;
   export type User = TypeOf<typeof User>;
@@ -84,7 +74,8 @@ export const fetchPages = (
   );
   return fetch(requestUrl)
     .then((response) => response.json())
-    .then(PagesResponse.decode);
+    .then(PagesResponse.decode)
+    .catch(left);
 };
 
 const isNonNullish = <T>(t: T): t is NonNullable<T> => t != null;

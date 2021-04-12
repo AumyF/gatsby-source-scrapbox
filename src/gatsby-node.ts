@@ -6,7 +6,7 @@ import {
   SourceNodesArgs,
 } from "gatsby";
 
-import { fetchPages } from "./scrapbox";
+import { fetchPages } from "./lib/scrapbox";
 
 export const sourceNodes = async (
   { actions, createContentDigest, createNodeId, reporter }: SourceNodesArgs,
@@ -49,7 +49,7 @@ export const sourceNodes = async (
 export const createSchemaCustomization = ({
   actions: { createTypes },
   schema,
-}: CreateSchemaCustomizationArgs) => {
+}: CreateSchemaCustomizationArgs): void => {
   const typedefs = [
     schema.buildObjectType({
       name: `ScrapboxPage`,
@@ -74,7 +74,9 @@ export const createSchemaCustomization = ({
   createTypes(typedefs);
 };
 
-export const pluginOptionsSchema = ({ Joi }: PluginOptionsSchemaArgs) => {
+export const pluginOptionsSchema = ({
+  Joi,
+}: PluginOptionsSchemaArgs): unknown => {
   return Joi.object({
     projectName: Joi.string()
       .required()
