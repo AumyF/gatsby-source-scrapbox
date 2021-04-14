@@ -1,5 +1,5 @@
 {
-  "include": ["src/lib/scrapbox.ts", "src/gatsby-node.ts"],
+  "include": ["src/gatsby-node.ts"],
   "exclude": [],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */

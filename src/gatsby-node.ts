@@ -1,4 +1,3 @@
-import { isLeft } from "fp-ts/lib/Either";
 import {
   CreateSchemaCustomizationArgs,
   PluginOptions,
@@ -6,7 +5,7 @@ import {
   SourceNodesArgs,
 } from "gatsby";
 
-import { fetchPages } from "./lib/scrapbox";
+import { fetchPages } from "./lib/fetch-pages";
 
 export const sourceNodes = async (
   { actions, createContentDigest, createNodeId, reporter }: SourceNodesArgs,
@@ -14,18 +13,14 @@ export const sourceNodes = async (
 ): Promise<unknown> => {
   const { createNode } = actions;
 
-  const validation = await fetchPages(projectName);
+  const pagesResponse = await fetchPages(projectName);
 
-  if (isLeft(validation)) {
-    reporter.panic(JSON.stringify(validation.left[0].context));
+  if (pagesResponse instanceof Error) {
+    reporter.panic(pagesResponse);
     return;
   }
 
-  const pagesResponse = validation.right;
-
-  const pages = pagesResponse.pages;
-
-  for (const page of pages) {
+  for (const page of pagesResponse.pages) {
     const nodeContent = JSON.stringify(page);
     const nodeMeta = {
       id: createNodeId(`scrapbox-page-${page.id}`),
@@ -33,7 +28,7 @@ export const sourceNodes = async (
       children: [],
       internal: {
         type: `ScrapboxPage`,
-        mediaType: `text/html`,
+        mediaType: `text/plain`,
         content: nodeContent,
         contentDigest: createContentDigest(page),
       },
@@ -66,7 +61,7 @@ export const createSchemaCustomization = ({
         snapshotCreated: "Int!",
         title: "String!",
         updated: "Int!",
-        // user: "User!",
+        // user: "ScrapboxUser!",
         views: "Int!",
       },
     }),
