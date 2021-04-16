@@ -1,4 +1,7 @@
+[日本語](README-ja.md)
+
 # gatsby-source-scrapbox
+
 
 Gatsby source plugin for sourcing data from [Scrapbox](https://scrapbox.io).
 
