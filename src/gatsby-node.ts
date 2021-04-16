@@ -6,6 +6,7 @@ import {
 } from "gatsby";
 
 import { fetchPages } from "./lib/fetch-pages";
+import { Node } from "./lib/node";
 
 export type SourceScrapboxOptions = Readonly<{
   limit?: number;
@@ -26,21 +27,10 @@ export const sourceNodes = async (
     return;
   }
 
-  for (const page of pagesResponse.pages) {
-    const nodeContent = JSON.stringify(page);
-    const nodeMeta = {
-      id: createNodeId(`scrapbox-page-${page.id}`),
-      parent: null,
-      children: [],
-      internal: {
-        type: `ScrapboxPage`,
-        mediaType: `text/plain`,
-        content: nodeContent,
-        contentDigest: createContentDigest(page),
-      },
-    };
-    const node = Object.assign({}, page, nodeMeta);
+  const buildNode = Node({ createContentDigest, createNodeId });
 
+  for (const page of pagesResponse.pages) {
+    const node = buildNode(page);
     createNode(node);
   }
 
