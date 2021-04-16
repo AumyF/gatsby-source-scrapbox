@@ -7,13 +7,19 @@ import {
 
 import { fetchPages } from "./lib/fetch-pages";
 
+export type SourceScrapboxOptions = Readonly<{
+  limit?: number;
+  projectName: string;
+  skip?: number;
+}>;
+
 export const sourceNodes = async (
   { actions, createContentDigest, createNodeId, reporter }: SourceNodesArgs,
-  { projectName }: PluginOptions & { projectName: string }
-): Promise<unknown> => {
+  { projectName, ...fetchPagesOptions }: PluginOptions & SourceScrapboxOptions
+): Promise<void> => {
   const { createNode } = actions;
 
-  const pagesResponse = await fetchPages(projectName);
+  const pagesResponse = await fetchPages(projectName, fetchPagesOptions);
 
   if (pagesResponse instanceof Error) {
     reporter.panic(pagesResponse);
@@ -72,9 +78,11 @@ export const createSchemaCustomization = ({
 export const pluginOptionsSchema = ({
   Joi,
 }: PluginOptionsSchemaArgs): unknown => {
-  return Joi.object({
+  return Joi.object<SourceScrapboxOptions>({
     projectName: Joi.string()
       .required()
       .description(`The project name following https://scrapbox.io/`),
+    skip: Joi.number().description(`Number of pages to skip fetching`),
+    limit: Joi.number().description(`Maximum number of pages to fetch`),
   });
 };
