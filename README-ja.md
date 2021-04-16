@@ -14,8 +14,6 @@
 
 ## インストール
 
-(not published yet)
-
 ```
 npm i gatsby-source-scrapbox
 ```

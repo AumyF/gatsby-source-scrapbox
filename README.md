@@ -2,7 +2,6 @@
 
 # gatsby-source-scrapbox
 
-
 Gatsby source plugin for sourcing data from [Scrapbox](https://scrapbox.io).
 
 > This plugin is not developed by Scrapbox and please do not report issues to them.
@@ -16,8 +15,6 @@ Gatsby source plugin for sourcing data from [Scrapbox](https://scrapbox.io).
 - [ ] Fetching images
 
 ## Installation
-
-(not published yet)
 
 ```
 npm i gatsby-source-scrapbox
