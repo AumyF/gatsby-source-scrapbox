@@ -6,6 +6,12 @@ Gatsby source plugin for sourcing data from [Scrapbox](https://scrapbox.io).
 
 > As described in https://scrapbox.io/help-jp/API, Scrapbox's API is subject to change without notice. If you find the plugin breaking, feel free to open an issue.
 
+## Features
+
+- [x] Fetching pages of project
+- [ ] Fetching contents of individual pages
+- [ ] Fetching images
+
 ## Installation
 
 (not published yet)
